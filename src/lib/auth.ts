@@ -53,7 +53,6 @@ export function isAdmin(user: AuthUser | null): boolean {
   return user?.role === 'admin';
 }
 
-// Add this new function for server component/API routes
 export async function auth() {
   const cookieStore = cookies();
   const token = cookieStore.get('auth-token')?.value;

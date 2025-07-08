@@ -218,7 +218,7 @@ export default function DashboardPage() {
     try {
       const params = new URLSearchParams({
         page: currentPage.toString(),
-        limit: '10',
+        limit: '24',
         status: statusFilter,
         ...(searchQuery && { search: searchQuery })
       });
@@ -234,7 +234,7 @@ export default function DashboardPage() {
       
       if (response.ok) {
         setListings(data.listings);
-        setTotalPages(Math.ceil(data.total / 10));
+        setTotalPages(Math.ceil(data.total / 24));
       } else {
         showNotification(data.error || 'Failed to load listings', 'error');
       }
@@ -505,7 +505,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Listings Content */}
-          <div className="divide-y divide-gray-200">
+          <div className="p-6">
             {listings.length === 0 ? (
               <div className="p-12 text-center">
                 <Car className="mx-auto h-12 w-12 text-gray-400 mb-4" />
@@ -513,83 +513,83 @@ export default function DashboardPage() {
                 <p className="text-gray-600">Try adjusting your search or filter criteria.</p>
               </div>
             ) : (
-              listings.map((listing) => (
-                <div key={listing.id} className="p-6 hover:bg-gray-50 transition-colors duration-200">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-4 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {listings.map((listing) => (
+                  <div key={listing.id} className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-200">
+                    <div className="relative h-48">
                       <img
-                        className="h-20 w-20 rounded-xl object-cover ring-2 ring-gray-200"
+                        className="w-full h-full object-cover"
                         src={listing.imageUrl}
                         alt={listing.title}
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = 'https://via.placeholder.com/80x80?text=Car';
+                          target.src = 'https://via.placeholder.com/400x200?text=Car';
                         }}
                       />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900 truncate">
-                            {listing.title}
-                          </h3>
-                          {getStatusBadge(listing.status)}
+                      <div className="absolute top-2 right-2">
+                        {getStatusBadge(listing.status)}
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-900 truncate mb-2">
+                        {listing.title}
+                      </h3>
+                      <div className="grid grid-cols-2 gap-3 text-sm text-gray-600 mb-4">
+                        <div className="flex items-center">
+                          <Car className="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{listing.brand} {listing.model} {listing.year}</span>
                         </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-600 mb-3">
-                          <div className="flex items-center">
-                            <Car className="w-4 h-4 mr-1.5 text-gray-400" />
-                            {listing.brand} {listing.model} {listing.year}
-                          </div>
-                          <div className="flex items-center">
-                            <DollarSign className="w-4 h-4 mr-1.5 text-gray-400" />
-                            ${listing.pricePerDay}/day
-                          </div>
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
-                            {listing.location}
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
-                            {new Date(listing.submittedAt).toLocaleDateString()}
-                          </div>
+                        <div className="flex items-center">
+                          <DollarSign className="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">${listing.pricePerDay}/day</span>
                         </div>
-                        {listing.rejectionReason && (
-                          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mt-2">
-                            <p className="text-sm text-red-800">
-                              <span className="font-semibold">Rejection Reason:</span> {listing.rejectionReason}
-                            </p>
-                          </div>
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{listing.location}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0" />
+                          <span className="truncate">{new Date(listing.submittedAt).toLocaleDateString()}</span>
+                        </div>
+                      </div>
+                      {listing.rejectionReason && (
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-2 mt-2 text-xs">
+                          <p className="text-red-800">
+                            <span className="font-semibold">Rejection:</span> {listing.rejectionReason}
+                          </p>
+                        </div>
+                      )}
+                      <div className="flex items-center justify-end space-x-2 mt-3 pt-3 border-t border-gray-100">
+                        <button
+                          onClick={() => setEditingListing(listing)}
+                          className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                          title="Edit listing"
+                        >
+                          <Edit3 className="w-5 h-5" />
+                        </button>
+                        {listing.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() => handleApprove(listing.id)}
+                              className="p-2 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors duration-200"
+                              title="Approve listing"
+                            >
+                              <CheckCircle2 className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => setShowRejectModal(listing.id)}
+                              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                              title="Reject listing"
+                            >
+                              <XCircle className="w-5 h-5" />
+                            </button>
+                          </>
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
-                      <button
-                        onClick={() => setEditingListing(listing)}
-                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-                        title="Edit listing"
-                      >
-                        <Edit3 className="w-5 h-5" />
-                      </button>
-                      {listing.status === 'pending' && (
-                        <>
-                          <button
-                            onClick={() => handleApprove(listing.id)}
-                            className="p-2 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors duration-200"
-                            title="Approve listing"
-                          >
-                            <CheckCircle2 className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => setShowRejectModal(listing.id)}
-                            className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                            title="Reject listing"
-                          >
-                            <XCircle className="w-5 h-5" />
-                          </button>
-                        </>
-                      )}
-                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
 
@@ -598,7 +598,7 @@ export default function DashboardPage() {
             <div className="bg-gray-50 px-6 py-4 border-t">
               <div className="flex items-center justify-between">
                 <p className="text-sm text-gray-700">
-                  Showing page {currentPage} of {totalPages}
+                  Showing page {currentPage} of {totalPages} ({listings.length} of {stats.total} total cars)
                 </p>
                 <nav className="flex space-x-2">
                   <button

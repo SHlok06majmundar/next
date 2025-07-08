@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get('page') || '1');
-    const limit = parseInt(url.searchParams.get('limit') || '10');
+    const limit = parseInt(url.searchParams.get('limit') || '24');  // Increased default limit from 10 to 24
     const status = url.searchParams.get('status') as 'pending' | 'approved' | 'rejected' | 'all' || 'all';
     const search = url.searchParams.get('search') || undefined;
 

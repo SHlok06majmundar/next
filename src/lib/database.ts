@@ -303,6 +303,123 @@ function populateTestData() {
         imageUrl: 'https://images.unsplash.com/photo-1577493340887-b7bfff550145?w=500',
         status: 'pending',
         submittedBy: 'user890'
+      },
+      {
+        id: uuidv4(),
+        title: 'Ferrari 488 - Italian Supercar',
+        description: 'Experience the ultimate driving thrill in this iconic Ferrari 488. Incredible handling and breathtaking acceleration.',
+        brand: 'Ferrari',
+        model: '488',
+        year: 2021,
+        pricePerDay: 350.00,
+        location: 'Marina District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=500',
+        status: 'approved',
+        submittedBy: 'user456'
+      },
+      {
+        id: uuidv4(),
+        title: 'Lamborghini Huracan - Exotic Beauty',
+        description: 'Turn heads everywhere you go with this stunning Lamborghini Huracan. Aggressive styling and exceptional performance.',
+        brand: 'Lamborghini',
+        model: 'Huracan',
+        year: 2022,
+        pricePerDay: 400.00,
+        location: 'Financial District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=500',
+        status: 'pending',
+        submittedBy: 'user234'
+      },
+      {
+        id: uuidv4(),
+        title: 'Nissan GT-R - Japanese Supercar',
+        description: 'Legendary Nissan GT-R with twin-turbo V6 and advanced AWD. Known as Godzilla, this technological marvel delivers supercar performance.',
+        brand: 'Nissan',
+        model: 'GT-R',
+        year: 2021,
+        pricePerDay: 220.00,
+        location: 'SoMa, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1595044426077-d36d9236d44e?w=500',
+        status: 'approved',
+        submittedBy: 'user567'
+      },
+      {
+        id: uuidv4(),
+        title: 'Rolls-Royce Ghost - Ultimate Luxury',
+        description: 'Experience the epitome of luxury with this Rolls-Royce Ghost. Hand-crafted excellence and whisper-quiet comfort.',
+        brand: 'Rolls-Royce',
+        model: 'Ghost',
+        year: 2023,
+        pricePerDay: 490.00,
+        location: 'Nob Hill, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1631294767601-83edce40f3a5?w=500',
+        status: 'pending',
+        submittedBy: 'user678'
+      },
+      {
+        id: uuidv4(),
+        title: 'Kia Telluride - Family SUV Excellence',
+        description: 'Award-winning Kia Telluride with three rows of seating. Perfect for family vacations and group trips.',
+        brand: 'Kia',
+        model: 'Telluride',
+        year: 2023,
+        pricePerDay: 75.00,
+        location: 'Outer Richmond, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500',
+        status: 'approved',
+        submittedBy: 'user345'
+      },
+      {
+        id: uuidv4(),
+        title: 'Bentley Continental GT - British Luxury',
+        description: 'Handcrafted Bentley Continental GT combining luxury with impressive performance. The perfect grand touring experience.',
+        brand: 'Bentley',
+        model: 'Continental GT',
+        year: 2022,
+        pricePerDay: 380.00,
+        location: 'Pacific Heights, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1619551734325-81aaf323686c?w=500',
+        status: 'pending',
+        submittedBy: 'user901'
+      },
+      {
+        id: uuidv4(),
+        title: 'Toyota RAV4 - Reliable SUV',
+        description: 'Dependable Toyota RAV4 SUV with excellent fuel economy and cargo space. Perfect for weekend getaways.',
+        brand: 'Toyota',
+        model: 'RAV4',
+        year: 2022,
+        pricePerDay: 58.00,
+        location: 'Mission District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1568844293986-ca9c5c1d4cba?w=500',
+        status: 'approved',
+        submittedBy: 'user123'
+      },
+      {
+        id: uuidv4(),
+        title: 'Honda CR-V - Practical Crossover',
+        description: 'Spacious and efficient Honda CR-V with advanced safety features. Great for city driving and outdoor adventures.',
+        brand: 'Honda',
+        model: 'CR-V',
+        year: 2023,
+        pricePerDay: 55.00,
+        location: 'Bernal Heights, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1623013438264-7ee5b373ef29?w=500',
+        status: 'pending',
+        submittedBy: 'user456'
+      },
+      {
+        id: uuidv4(),
+        title: 'McLaren 720S - Hypercar Experience',
+        description: 'Breathtaking McLaren 720S with stunning design and incredible performance. The ultimate driving experience for enthusiasts.',
+        brand: 'McLaren',
+        model: '720S',
+        year: 2022,
+        pricePerDay: 450.00,
+        location: 'Marina District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1621363441864-a11465b57886?w=500',
+        status: 'approved',
+        submittedBy: 'user789'
       }
     ];
 
@@ -321,15 +438,12 @@ function populateTestData() {
     });
   });
 
-  // Add sample audit logs
   dbConnection!.get('SELECT COUNT(*) as count FROM audit_logs', (err, row: any) => {
     if (err || row.count > 0) return;
 
-    // Get an admin user for the audit logs
     dbConnection!.get('SELECT id, username FROM users WHERE role = "admin" LIMIT 1', (err, adminUser: any) => {
       if (err || !adminUser) return;
 
-      // Get a few listings to reference in audit logs
       dbConnection!.all('SELECT id FROM car_listings LIMIT 5', (err, listings: any[]) => {
         if (err || !listings.length) return;
 
@@ -377,7 +491,7 @@ function populateTestData() {
             admin_id: adminUser.id,
             admin_username: adminUser.username,
             reason: 'Missing required documentation',
-            timestamp: new Date().toISOString() // today
+            timestamp: new Date().toISOString()
           }
         ];
 

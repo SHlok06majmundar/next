@@ -14,7 +14,7 @@
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
   --input: #f8fafc;
-  --input-foreground: #1a1a1a; /* Added for input text color */
+  --input-foreground: #1a1a1a; 
   --ring: #2563eb;
   --radius: 0.5rem;
 }
@@ -29,7 +29,7 @@
     --accent: #0ea5e9;
     --border: #334155;
     --input: #1e293b;
-    --input-foreground: #f1f5f9; /* Added for input text color in dark mode */
+    --input-foreground: #f1f5f9;
   }
 }
 
@@ -90,7 +90,6 @@ body {
   background-color: var(--input);
 }
 
-/* Ensure form inputs have good contrast */
 input, 
 textarea, 
 select {
