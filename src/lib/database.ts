@@ -98,72 +98,305 @@ function populateTestData() {
       {
         id: uuidv4(),
         title: 'Honda Civic 2019 - Sporty and Efficient',
-        description: 'Clean Honda Civic with low mileage. Great for city driving and weekend getaways.',
+        description: 'Modern Honda Civic with all the latest technology features. Great for city driving and road trips.',
         brand: 'Honda',
         model: 'Civic',
         year: 2019,
-        pricePerDay: 40.00,
-        location: 'Oakland, CA',
-        imageUrl: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=500',
+        pricePerDay: 38.00,
+        location: 'Mission District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1606664519473-1c397c02eafa?w=500',
         status: 'approved',
-        submittedBy: 'user456',
-        reviewedBy: 'admin',
-        reviewedAt: new Date().toISOString()
+        submittedBy: 'user456'
       },
       {
         id: uuidv4(),
-        title: 'BMW X3 2021 - Luxury SUV',
-        description: 'Premium BMW X3 with all modern amenities. Perfect for special occasions and comfortable long drives.',
-        brand: 'BMW',
-        model: 'X3',
-        year: 2021,
-        pricePerDay: 85.00,
-        location: 'Palo Alto, CA',
-        imageUrl: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=500',
-        status: 'pending',
-        submittedBy: 'user789'
-      },
-      {
-        id: uuidv4(),
-        title: 'Ford Focus 2018 - Budget Friendly',
-        description: 'Affordable Ford Focus in good condition. Ideal for budget-conscious travelers.',
-        brand: 'Ford',
-        model: 'Focus',
-        year: 2018,
-        pricePerDay: 35.00,
-        location: 'San Jose, CA',
-        imageUrl: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=500',
-        status: 'rejected',
-        submittedBy: 'user101',
-        reviewedBy: 'admin',
-        reviewedAt: new Date().toISOString(),
-        rejectionReason: 'Vehicle does not meet safety standards'
-      },
-      {
-        id: uuidv4(),
-        title: 'Tesla Model 3 2022 - Electric and Modern',
-        description: 'Latest Tesla Model 3 with autopilot features. Eco-friendly option for tech enthusiasts.',
+        title: 'Tesla Model 3 - Electric Luxury',
+        description: 'Experience the future of driving with this sleek Tesla Model 3. Zero emissions and full of cutting-edge features.',
         brand: 'Tesla',
         model: 'Model 3',
         year: 2022,
         pricePerDay: 95.00,
-        location: 'Fremont, CA',
-        imageUrl: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=500',
+        location: 'Marina District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1591440549227-4ac2dcc9574b?w=500',
+        status: 'approved',
+        submittedBy: 'user789'
+      },
+      {
+        id: uuidv4(),
+        title: 'BMW 3 Series - Premium Driving Experience',
+        description: 'Elegant BMW 3 Series offering a perfect blend of performance and luxury. Ideal for special occasions.',
+        brand: 'BMW',
+        model: '3 Series',
+        year: 2021,
+        pricePerDay: 85.00,
+        location: 'Pacific Heights, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1612471758789-a965563a32d6?w=500',
+        status: 'rejected',
+        submittedBy: 'user123',
+        rejectionReason: 'Documentation incomplete, please resubmit with insurance papers.'
+      },
+      {
+        id: uuidv4(),
+        title: 'Audi A4 2022 - Executive Elegance',
+        description: 'Premium Audi A4 with leather interior and advanced driving features. Perfect for business trips and making an impression.',
+        brand: 'Audi',
+        model: 'A4',
+        year: 2022,
+        pricePerDay: 89.00,
+        location: 'Financial District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?w=500',
         status: 'pending',
-        submittedBy: 'user202'
+        submittedBy: 'user567'
+      },
+      {
+        id: uuidv4(),
+        title: 'Jeep Wrangler - Adventure Ready',
+        description: 'Rugged Jeep Wrangler ready for your next outdoor adventure. Great for weekend getaways to mountains or beaches.',
+        brand: 'Jeep',
+        model: 'Wrangler',
+        year: 2021,
+        pricePerDay: 75.00,
+        location: 'Sunset District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=500',
+        status: 'approved',
+        submittedBy: 'user890'
+      },
+      {
+        id: uuidv4(),
+        title: 'Mercedes C-Class - Luxury and Style',
+        description: 'Elegant Mercedes C-Class with premium finishes and smooth handling. The perfect luxury rental for any occasion.',
+        brand: 'Mercedes-Benz',
+        model: 'C-Class',
+        year: 2023,
+        pricePerDay: 95.00,
+        location: 'Nob Hill, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500',
+        status: 'pending',
+        submittedBy: 'user345'
+      },
+      {
+        id: uuidv4(),
+        title: 'Ford Mustang GT - American Muscle',
+        description: 'Classic American muscle car with powerful engine and iconic design. Experience the thrill of driving this legendary vehicle.',
+        brand: 'Ford',
+        model: 'Mustang GT',
+        year: 2022,
+        pricePerDay: 82.00,
+        location: 'Richmond District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1584345604476-8ec5f452d1f2?w=500',
+        status: 'approved',
+        submittedBy: 'user678'
+      },
+      {
+        id: uuidv4(),
+        title: 'Porsche 911 - Performance Perfection',
+        description: 'Iconic Porsche 911 offering unmatched driving dynamics and head-turning style. For the discerning driver who accepts no compromises.',
+        brand: 'Porsche',
+        model: '911',
+        year: 2023,
+        pricePerDay: 150.00,
+        location: 'Marina District, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500',
+        status: 'pending',
+        submittedBy: 'user901'
+      },
+      {
+        id: uuidv4(),
+        title: 'Range Rover Sport - Luxury SUV',
+        description: 'Premium Range Rover Sport combining off-road capability with urban sophistication. Spacious interior and commanding presence.',
+        brand: 'Land Rover',
+        model: 'Range Rover Sport',
+        year: 2022,
+        pricePerDay: 120.00,
+        location: 'Presidio Heights, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1536637002700-58382d05da76?w=500',
+        status: 'approved',
+        submittedBy: 'user234'
+      },
+      {
+        id: uuidv4(),
+        title: 'Range Rover Sport - Luxury SUV Experience',
+        description: 'Premium Range Rover Sport with all the bells and whistles. Perfect for family trips and outdoor adventures with style.',
+        brand: 'Land Rover',
+        model: 'Range Rover Sport',
+        year: 2023,
+        pricePerDay: 135.00,
+        location: 'Pacific Heights, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=500',
+        status: 'approved',
+        submittedBy: 'user789'
+      },
+      {
+        id: uuidv4(),
+        title: 'Lexus ES - Japanese Luxury',
+        description: 'Elegant Lexus ES offering exceptional comfort and reliability. Enjoy smooth driving and premium features.',
+        brand: 'Lexus',
+        model: 'ES',
+        year: 2023,
+        pricePerDay: 85.00,
+        location: 'Embarcadero, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=500',
+        status: 'pending',
+        submittedBy: 'user234'
+      },
+      {
+        id: uuidv4(),
+        title: 'Volkswagen Golf GTI - Hot Hatch Fun',
+        description: 'Sporty VW Golf GTI combining practicality with driving excitement. The perfect balance of performance and everyday usability.',
+        brand: 'Volkswagen',
+        model: 'Golf GTI',
+        year: 2022,
+        pricePerDay: 65.00,
+        location: 'Mission Bay, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500',
+        status: 'pending',
+        submittedBy: 'user456'
+      },
+      {
+        id: uuidv4(),
+        title: 'Chevrolet Corvette - American Icon',
+        description: 'Thrilling Corvette with head-turning design and exhilarating performance. Experience the pinnacle of American sports car engineering.',
+        brand: 'Chevrolet',
+        model: 'Corvette',
+        year: 2022,
+        pricePerDay: 125.00,
+        location: 'North Beach, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1552519507-88aa2dfa9fdb?w=500',
+        status: 'approved',
+        submittedBy: 'user789'
+      },
+      {
+        id: uuidv4(),
+        title: 'Subaru Outback - All-Weather Adventure',
+        description: 'Reliable Subaru Outback with all-wheel drive and ample cargo space. Perfect for outdoor adventures and road trips in any weather.',
+        brand: 'Subaru',
+        model: 'Outback',
+        year: 2021,
+        pricePerDay: 58.00,
+        location: 'Outer Sunset, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1563720223185-11994e909e74?w=500',
+        status: 'pending',
+        submittedBy: 'user567'
+      },
+      {
+        id: uuidv4(),
+        title: 'Hyundai Tucson - Modern Family SUV',
+        description: 'Stylish Hyundai Tucson with modern amenities and comfortable interior. Great for family trips and daily commutes.',
+        brand: 'Hyundai',
+        model: 'Tucson',
+        year: 2023,
+        pricePerDay: 52.00,
+        location: 'Hayes Valley, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1632183053282-319fabaf6e55?w=500',
+        status: 'approved',
+        submittedBy: 'user123'
+      },
+      {
+        id: uuidv4(),
+        title: 'Mazda MX-5 Miata - Convertible Fun',
+        description: 'Iconic Mazda MX-5 Miata convertible for the ultimate open-air driving experience. Perfect for scenic coastal drives.',
+        brand: 'Mazda',
+        model: 'MX-5 Miata',
+        year: 2022,
+        pricePerDay: 68.00,
+        location: 'Russian Hill, San Francisco',
+        imageUrl: 'https://images.unsplash.com/photo-1577493340887-b7bfff550145?w=500',
+        status: 'pending',
+        submittedBy: 'user890'
       }
     ];
 
-    testListings.forEach(listing => {
+    testListings.forEach((listing) => {
       dbConnection!.run(
-        `INSERT INTO car_listings (id, title, description, brand, model, year, price_per_day, location, image_url, status, submitted_by, reviewed_by, reviewed_at, rejection_reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO car_listings (
+          id, title, description, brand, model, year, price_per_day,
+          location, image_url, status, submitted_by
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
-          listing.id, listing.title, listing.description, listing.brand, listing.model,
-          listing.year, listing.pricePerDay, listing.location, listing.imageUrl,
-          listing.status, listing.submittedBy, listing.reviewedBy || null,
-          listing.reviewedAt || null, listing.rejectionReason || null
+          listing.id, listing.title, listing.description, listing.brand,
+          listing.model, listing.year, listing.pricePerDay, listing.location,
+          listing.imageUrl, listing.status, listing.submittedBy
         ]
       );
+    });
+  });
+
+  // Add sample audit logs
+  dbConnection!.get('SELECT COUNT(*) as count FROM audit_logs', (err, row: any) => {
+    if (err || row.count > 0) return;
+
+    // Get an admin user for the audit logs
+    dbConnection!.get('SELECT id, username FROM users WHERE role = "admin" LIMIT 1', (err, adminUser: any) => {
+      if (err || !adminUser) return;
+
+      // Get a few listings to reference in audit logs
+      dbConnection!.all('SELECT id FROM car_listings LIMIT 5', (err, listings: any[]) => {
+        if (err || !listings.length) return;
+
+        const sampleAuditLogs = [
+          {
+            id: uuidv4(),
+            action: 'approve',
+            listing_id: listings[0]?.id,
+            admin_id: adminUser.id,
+            admin_username: adminUser.username,
+            reason: 'Listing meets all requirements and photos are clear',
+            timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days ago
+          },
+          {
+            id: uuidv4(),
+            action: 'reject',
+            listing_id: listings[1]?.id,
+            admin_id: adminUser.id,
+            admin_username: adminUser.username,
+            reason: 'Vehicle photos do not match description',
+            timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+          },
+          {
+            id: uuidv4(),
+            action: 'edit',
+            listing_id: listings[2]?.id,
+            admin_id: adminUser.id,
+            admin_username: adminUser.username,
+            reason: 'Updated pricing to match market rates',
+            timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString() // 3 days ago
+          },
+          {
+            id: uuidv4(),
+            action: 'approve',
+            listing_id: listings[3]?.id,
+            admin_id: adminUser.id,
+            admin_username: adminUser.username,
+            reason: 'Premium vehicle with excellent condition photos',
+            timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() // 1 day ago
+          },
+          {
+            id: uuidv4(),
+            action: 'reject',
+            listing_id: listings[4]?.id,
+            admin_id: adminUser.id,
+            admin_username: adminUser.username,
+            reason: 'Missing required documentation',
+            timestamp: new Date().toISOString() // today
+          }
+        ];
+
+        sampleAuditLogs.forEach(log => {
+          dbConnection!.run(
+            `INSERT INTO audit_logs (id, action, listing_id, admin_id, admin_username, reason, timestamp)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [
+              log.id,
+              log.action,
+              log.listing_id,
+              log.admin_id,
+              log.admin_username,
+              log.reason,
+              log.timestamp
+            ]
+          );
+        });
+      });
     });
   });
 }
@@ -478,4 +711,46 @@ export class DatabaseService {
       });
     });
   }
+}
+
+export async function getAuditLogs({ page = 1, limit = 20 }: PaginationParams) {
+  return new Promise<{ logs: AuditLog[], total: number }>((resolve, reject) => {
+    const db = getDatabase();
+    const offset = (page - 1) * limit;
+    
+    db.get('SELECT COUNT(*) as count FROM audit_logs', (err, countResult: any) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const total = countResult?.count || 0;
+      
+      db.all(
+        `SELECT * FROM audit_logs ORDER BY timestamp DESC LIMIT ? OFFSET ?`,
+        [limit, offset],
+        (err, rows: any[]) => {
+          if (err) {
+            reject(err);
+            return;
+          }
+          
+          const logs = rows.map((row) => ({
+            id: row.id,
+            action: row.action,
+            listingId: row.listing_id,
+            adminId: row.admin_id,
+            adminUsername: row.admin_username,
+            previousData: row.previous_data ? JSON.parse(row.previous_data) : undefined,
+            newData: row.new_data ? JSON.parse(row.new_data) : undefined,
+            reason: row.reason,
+            details: row.reason,
+            timestamp: new Date(row.timestamp),
+          }));
+          
+          resolve({ logs, total });
+        }
+      );
+    });
+  });
 }

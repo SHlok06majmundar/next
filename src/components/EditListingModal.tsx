@@ -67,11 +67,11 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold">Edit Listing</h2>
+        <div className="flex items-center justify-between p-6 border-b bg-blue-50">
+          <h2 className="text-xl font-semibold text-blue-800">Edit Listing</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-600 hover:text-gray-800"
             aria-label="Close modal"
           >
             <X className="w-6 h-6" />
@@ -88,7 +88,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter listing title"
+              title="Listing title"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
               required
             />
           </div>
@@ -102,7 +104,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter vehicle description"
+              title="Vehicle description"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
               required
             />
           </div>
@@ -117,7 +121,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
                 name="brand"
                 value={formData.brand}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter brand name"
+                title="Vehicle brand"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
                 required
               />
             </div>
@@ -131,7 +137,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
                 name="model"
                 value={formData.model}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter model name"
+                title="Vehicle model"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
                 required
               />
             </div>
@@ -149,7 +157,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
                 onChange={handleChange}
                 min="1900"
                 max="2030"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter year (e.g., 2023)"
+                title="Vehicle year"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
                 required
               />
             </div>
@@ -165,7 +175,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
                 onChange={handleChange}
                 min="0"
                 step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter daily rental price"
+                title="Daily rental price"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
                 required
               />
             </div>
@@ -180,7 +192,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter vehicle location"
+              title="Vehicle location"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
               required
             />
           </div>
@@ -194,7 +208,9 @@ export default function EditListingModal({ listing, isOpen, onClose, onUpdate }:
               name="imageUrl"
               value={formData.imageUrl}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Enter image URL"
+              title="Vehicle image URL"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 bg-white"
               required
             />
           </div>

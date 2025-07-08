@@ -16,11 +16,10 @@ import {
   DollarSign, 
   MapPin,
   BarChart3,
+  Plus,
+  Eye,
   Loader2,
-  Image as ImageIcon,
-  TrendingUp,
-  Users,
-  Clock
+  Image as ImageIcon
 } from 'lucide-react';
 
 interface ListingModalProps {
@@ -365,13 +364,6 @@ export default function DashboardPage() {
     );
   };
 
-  const stats = {
-    total: listings.length,
-    pending: listings.filter(l => l.status === 'pending').length,
-    approved: listings.filter(l => l.status === 'approved').length,
-    rejected: listings.filter(l => l.status === 'rejected').length
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
@@ -385,7 +377,6 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      {/* Header */}
       <div className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
@@ -420,61 +411,8 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-blue-100">
-                <Car className="h-6 w-6 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Listings</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-amber-100">
-                <Clock className="h-6 w-6 text-amber-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.pending}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-emerald-100">
-                <CheckCircle2 className="h-6 w-6 text-emerald-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Approved</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.approved}</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-red-100">
-                <XCircle className="h-6 w-6 text-red-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Rejected</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.rejected}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-          {/* Search and Filter Header */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <div className="flex-1 relative">
@@ -504,186 +442,257 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Listings Content */}
-          <div className="divide-y divide-gray-200">
-            {listings.length === 0 ? (
-              <div className="p-12 text-center">
-                <Car className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No listings found</h3>
-                <p className="text-gray-600">Try adjusting your search or filter criteria.</p>
-              </div>
-            ) : (
-              listings.map((listing) => (
-                <div key={listing.id} className="p-6 hover:bg-gray-50 transition-colors duration-200">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-4 flex-1">
+          <div className="p-6">{/* Rest of content will go here */}
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(listing),
+      });
+
+      if (response.ok) {
+        showNotification('Listing updated successfully', 'success');
+        setEditingListing(null);
+        loadListings();
+      } else {
+        const data = await response.json();
+        showNotification(data.error || 'Failed to update listing', 'error');
+      }
+    } catch (error) {
+      showNotification('Network error occurred', 'error');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login');
+    } catch (error) {
+      showNotification('Logout failed', 'error');
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    const classes = {
+      pending: 'bg-yellow-100 text-yellow-800',
+      approved: 'bg-green-100 text-green-800',
+      rejected: 'bg-red-100 text-red-800'
+    };
+
+    return (
+      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${classes[status as keyof typeof classes]}`}>
+        {status.charAt(0).toUpperCase() + status.slice(1)}
+      </span>
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-6">
+            <div className="flex items-center">
+              <Car className="h-8 w-8 text-indigo-600 mr-3" />
+              <h1 className="text-2xl font-bold text-gray-900">Car Rental Admin</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => router.push('/audit')}
+                className="text-indigo-600 hover:text-indigo-900"
+              >
+                Audit Trail
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center text-gray-500 hover:text-gray-700"
+              >
+                <LogOut className="w-4 h-4 mr-1" />
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          <div className="mb-6 flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search listings..."
+                className="pl-10 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Filter className="w-5 h-5 text-gray-400" />
+              <select
+                className="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as any)}
+              >
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul className="divide-y divide-gray-200">
+              {listings.map((listing) => (
+                <li key={listing.id} className="px-6 py-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
                       <img
-                        className="h-20 w-20 rounded-xl object-cover ring-2 ring-gray-200"
+                        className="h-16 w-16 rounded-lg object-cover"
                         src={listing.imageUrl}
                         alt={listing.title}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://via.placeholder.com/80x80?text=Car';
-                        }}
                       />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900 truncate">
-                            {listing.title}
-                          </h3>
-                          {getStatusBadge(listing.status)}
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-600 mb-3">
-                          <div className="flex items-center">
-                            <Car className="w-4 h-4 mr-1.5 text-gray-400" />
+                      <div className="ml-4">
+                        <h3 className="text-lg font-medium text-gray-900">{listing.title}</h3>
+                        <div className="flex items-center text-sm text-gray-500 space-x-4">
+                          <span className="flex items-center">
+                            <Car className="w-4 h-4 mr-1" />
                             {listing.brand} {listing.model} {listing.year}
-                          </div>
-                          <div className="flex items-center">
-                            <DollarSign className="w-4 h-4 mr-1.5 text-gray-400" />
+                          </span>
+                          <span className="flex items-center">
+                            <DollarSign className="w-4 h-4 mr-1" />
                             ${listing.pricePerDay}/day
-                          </div>
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
+                          </span>
+                          <span className="flex items-center">
+                            <MapPin className="w-4 h-4 mr-1" />
                             {listing.location}
-                          </div>
-                          <div className="flex items-center">
-                            <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
+                          </span>
+                          <span className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-1" />
                             {new Date(listing.submittedAt).toLocaleDateString()}
-                          </div>
+                          </span>
                         </div>
-                        {listing.rejectionReason && (
-                          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mt-2">
-                            <p className="text-sm text-red-800">
-                              <span className="font-semibold">Rejection Reason:</span> {listing.rejectionReason}
+                        <div className="mt-2">
+                          {getStatusBadge(listing.status)}
+                          {listing.rejectionReason && (
+                            <p className="text-sm text-red-600 mt-1">
+                              Reason: {listing.rejectionReason}
                             </p>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
+                    <div className="flex items-center space-x-2">
                       <button
                         onClick={() => setEditingListing(listing)}
-                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-                        title="Edit listing"
+                        className="p-2 text-blue-600 hover:text-blue-900"
+                        title="Edit"
                       >
-                        <Edit3 className="w-5 h-5" />
+                        <Edit className="w-5 h-5" />
                       </button>
                       {listing.status === 'pending' && (
                         <>
                           <button
                             onClick={() => handleApprove(listing.id)}
-                            className="p-2 text-emerald-600 hover:text-emerald-800 hover:bg-emerald-50 rounded-lg transition-colors duration-200"
-                            title="Approve listing"
+                            className="p-2 text-green-600 hover:text-green-900"
+                            title="Approve"
                           >
-                            <CheckCircle2 className="w-5 h-5" />
+                            <Check className="w-5 h-5" />
                           </button>
                           <button
                             onClick={() => setShowRejectModal(listing.id)}
-                            className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                            title="Reject listing"
+                            className="p-2 text-red-600 hover:text-red-900"
+                            title="Reject"
                           >
-                            <XCircle className="w-5 h-5" />
+                            <X className="w-5 h-5" />
                           </button>
                         </>
                       )}
                     </div>
                   </div>
-                </div>
-              ))
-            )}
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
-            <div className="bg-gray-50 px-6 py-4 border-t">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-700">
-                  Showing page {currentPage} of {totalPages}
-                </p>
-                <nav className="flex space-x-2">
+            <div className="mt-6 flex justify-center">
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  Previous
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <button
-                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                    disabled={currentPage === 1}
-                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                      page === currentPage
+                        ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                    }`}
                   >
-                    Previous
+                    {page}
                   </button>
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const page = Math.max(1, Math.min(totalPages - 4, currentPage - 2)) + i;
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className={`px-3 py-2 text-sm font-medium rounded-lg ${
-                          page === currentPage
-                            ? 'bg-blue-600 text-white'
-                            : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
-                  <button
-                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                    disabled={currentPage === totalPages}
-                    className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Next
-                  </button>
-                </nav>
-              </div>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </nav>
             </div>
           )}
         </div>
       </div>
 
-      {/* Modals */}
-      {editingListing && (
-        <EditListingModal
-          listing={editingListing}
-          isOpen={true}
-          onClose={() => setEditingListing(null)}
-          onSave={handleEdit}
-        />
-      )}
+      <EditListingModal
+        listing={editingListing}
+        isOpen={!!editingListing}
+        onClose={() => setEditingListing(null)}
+        onSave={handleEdit}
+      />
 
       {showRejectModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
-            <div className="bg-gradient-to-r from-red-600 to-red-700 px-6 py-4">
-              <h3 className="text-xl font-semibold text-white flex items-center">
-                <XCircle className="w-5 h-5 mr-2" />
-                Reject Listing
-              </h3>
-            </div>
-            <div className="p-6">
-              <p className="text-gray-600 mb-4">
-                Please provide a reason for rejecting this listing:
-              </p>
-              <textarea
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200"
-                placeholder="Enter rejection reason..."
-                value={rejectionReason}
-                onChange={(e) => setRejectionReason(e.target.value)}
-              />
-            </div>
-            <div className="bg-gray-50 px-6 py-4 flex justify-end space-x-3 border-t">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <h3 className="text-lg font-medium mb-4">Reject Listing</h3>
+            <textarea
+              rows={3}
+              className="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Please provide a reason for rejection..."
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+            />
+            <div className="mt-4 flex justify-end space-x-3">
               <button
                 onClick={() => {
                   setShowRejectModal(null);
                   setRejectionReason('');
                 }}
-                className="px-6 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleReject(showRejectModal)}
-                className="px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-all duration-200"
+                className="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700"
               >
-                Reject Listing
+                Reject
               </button>
             </div>
           </div>

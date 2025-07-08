@@ -1,6 +1,7 @@
 import { jwtVerify, SignJWT } from 'jose';
 import { NextRequest } from 'next/server';
 import { AuthUser } from '@/types';
+import { cookies } from 'next/headers';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production'
@@ -50,4 +51,21 @@ export async function getAuthUser(request: NextRequest): Promise<AuthUser | null
 
 export function isAdmin(user: AuthUser | null): boolean {
   return user?.role === 'admin';
+}
+
+// Add this new function for server component/API routes
+export async function auth() {
+  const cookieStore = cookies();
+  const token = cookieStore.get('auth-token')?.value;
+  
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const user = await verifyToken(token);
+    return user ? { user } : null;
+  } catch (error) {
+    return null;
+  }
 }
